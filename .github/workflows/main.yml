@@ -9,6 +9,8 @@ on: # rebuild any PRs and main branch changes
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      IMAGE: aelfactory/aelf-devcontainer
     steps:
       - name: Checkout (GitHub)
         uses: actions/checkout@v3
@@ -16,7 +18,7 @@ jobs:
       - name: Test image builds correctly and is able to pass all tests
         uses: devcontainers/ci@v0.3
         with:
-          cacheFrom: ghcr.io/${{ github.repository_owner }}/aelfinity-workshop
+          cacheFrom: ${{ env.IMAGE }}
           push: never
           runCmd: |
             mkdir workshop &&
@@ -37,17 +39,16 @@ jobs:
 
       - name: Login to GitHub Container Registry
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and publish
         if: steps.semantic.outputs.new_release_published == 'true'
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/${{ github.repository_owner }}/aelfinity-workshop
-          cacheFrom: ghcr.io/${{ github.repository_owner }}/aelfinity-workshop
+          imageName: ${{ env.IMAGE }}
+          cacheFrom: ${{ env.IMAGE }}
           imageTag: ${{ steps.semantic.outputs.new_release_version }}${{ github.ref_name == 'main' && ',latest' || '' }}
           push: always
