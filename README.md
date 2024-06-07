@@ -14,7 +14,7 @@ See [workflow](.github/workflows/main.yml).
 
 ## Testing the image
 
-See https://github.com/yongenaelf/aelf-devcontainer-template.
+See https://github.com/AElfProject/aelf-devcontainer-template.
 
 ## References
 
