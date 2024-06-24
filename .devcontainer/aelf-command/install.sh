@@ -27,5 +27,5 @@ fi
 # https://github.com/nodesource/distributions?tab=readme-ov-file#using-debian-as-root-3
 curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - &&\
 apt-get install -y nodejs
-
+npm install --global yarn
 npm i -g aelf-command@$VERSION
