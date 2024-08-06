@@ -7,9 +7,9 @@
       "version": {
           "type": "string",
           "proposals": [
-              "latest"
+              "0.1.47-beta.9"
           ],
-          "default": "latest",
+          "default": "0.1.47-beta.9",
           "description": "Select a version, or enter your own"
       }
   },
